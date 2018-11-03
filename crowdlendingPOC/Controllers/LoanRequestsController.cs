@@ -18,6 +18,7 @@ namespace CrowdlendingPOC.Controllers
 
         public LoanRequestsController(ApplicationDbContext context)
         {
+            // TODO inject ILoanRequestsRepository or ILoanRequestsService instead of ApplicationDbContext to purpose of the unit testing
             _context = context;
         }
 
