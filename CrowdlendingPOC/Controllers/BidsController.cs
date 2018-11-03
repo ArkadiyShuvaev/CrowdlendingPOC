@@ -60,6 +60,12 @@ namespace CrowdlendingPOC.Controllers
             
             var currentRequestorId = 100; // TODO retrieve currentRequestorId from the ControllerContext
 
+            var doesBidExist = _context.Bids.Any(b => b.InvestorId == currentRequestorId && b.LoanRequestId == vm.LoanRequestId);
+            if(doesBidExist)
+            {
+                return BadRequest("Bid already exits");
+            }
+
             var newBid = new Bid
             {
                 Amount = vm.CurrentInvestorAmount,
