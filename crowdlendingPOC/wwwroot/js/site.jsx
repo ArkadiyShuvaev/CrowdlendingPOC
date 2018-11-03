@@ -5,19 +5,10 @@ const Request = (propValues) => {
     const purposeVal = props.purpose || "";
     var purpose = purposeVal.toString().substr(0, 100) + "...";
 
-    var hasCurrentInvestorAmount = true;
-    //props.currentInvestorAmount
-    const amountBtn = (hasCurrentInvestorAmount ? 
-        <button
-            type="button"
-            className="btn btn-sm"
-            aria-label="Left Align"
-            onClick={(e) => propValues.investorAmountClickAddHandler(props.id, e)}>
-
-            <span className="glyphicon glyphicon-ok test-success" aria-hidden="true"></span>
-        </button> : 
-        
-        
+    //var doesCurrentInvestorAmountExist = true;
+    
+    const amountBtn = (props.doesCurrentInvestorAmountExist
+        ? 
         <button
             type="button"
             className="btn btn-sm"
@@ -25,6 +16,15 @@ const Request = (propValues) => {
             onClick={(e) => propValues.investorAmountClickRemoveHandler(props.id, e)}>
 
             <span className="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+        </button>
+        :
+        <button
+            type="button"
+            className="btn btn-sm"
+            aria-label="Left Align"
+            onClick={(e) => propValues.investorAmountClickAddHandler(props.id, e)}>
+
+            <span className="glyphicon glyphicon-ok test-success" aria-hidden="true"></span>
         </button>
     );
 
@@ -130,7 +130,11 @@ class App extends React.Component {
             dataType: 'json',
             url: "api/bids/PostBid",
             success: (data) => {
-                debugger;                
+                debugger;
+                const updatedElem = this.getRequestById(currentElem.id);
+                updatedElem.doesCurrentInvestorAmountExist = true;
+                const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
+                that.setState({ requests: updatedRequests });
             },
             error: (xhr, ajaxOptions, thrownError) => {
                 this.errorHandler(xhr, ajaxOptions, thrownError);
@@ -166,7 +170,17 @@ class App extends React.Component {
             async: true,
             url: "api/LoanRequests",
             success: (data) => {
-                that.setState({requests: data})
+                if (data && data.length > 0) {
+
+                    const requests = data.map((i => {
+                        if (i.currentInvestorAmount) {
+                            i.doesCurrentInvestorAmountExist = true;
+                        }
+                    }));
+
+                    that.setState({ requests: data })
+                }
+                
             },
             error: (xhr, ajaxOptions, thrownError) => {
                 alert(xhr.status);
