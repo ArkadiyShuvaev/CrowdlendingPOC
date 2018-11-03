@@ -11,6 +11,7 @@ namespace CrowdlendingPOC.Models
         public int InvestorId { get; set; }
         //TODO define precision dec(19,4)
         public decimal Amount { get; set; }
-        public LoanRequest LoanRequests { get; set; }
+        public int LoanRequestId { get; set; }
+        public virtual LoanRequest LoanRequest { get; set; }
     }
 }

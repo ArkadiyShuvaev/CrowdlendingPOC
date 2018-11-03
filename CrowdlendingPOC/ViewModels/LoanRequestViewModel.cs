@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CrowdlendingPOC.ViewModels
 {
@@ -14,6 +15,7 @@ namespace CrowdlendingPOC.ViewModels
         public decimal AmountRequest { get; set; }
         public DateTime RepaymentStartDate { get; set; }
         public DateTime RepaymentEndDate { get; set; }
-        public string Purpose { get; set; }        
+        public string Purpose { get; set; }
+        public decimal CurrentInvestorAmount { get; set; }
     }
 }

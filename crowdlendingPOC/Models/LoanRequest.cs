@@ -23,6 +23,6 @@ namespace CrowdlendingPOC.Models
 
         [StringLength(250)]
         public string Purpose { get; set; }
-        public ICollection<Bid> Bids { get; set; }
+        public virtual ICollection<Bid> Bids { get; set; }
     }
 }

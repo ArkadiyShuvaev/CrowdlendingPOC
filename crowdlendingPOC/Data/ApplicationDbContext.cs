@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CrowdlendingPOC.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace CrowdlendingPOC.Data
 {

@@ -26,6 +26,11 @@ namespace CrowdlendingPOC.Controllers
         [HttpGet]
         public IEnumerable<LoanRequestViewModel> GetLoanRequest()
         {
+            //TODO Add Exception Handling
+
+            FillInIfEmpty();
+            var currentUserId = 100; // TODO retrieve currentUserId from the ControllerContext
+
             var result = _context.LoanRequests
                 .Where(i => !i.IsWithdrawn)
                 .Select(i => new LoanRequestViewModel
@@ -41,20 +46,88 @@ namespace CrowdlendingPOC.Controllers
                     RepaymentEndDate = i.RepaymentEndDate,
                     RepaymentStartDate = i.RepaymentStartDate
                 });
-            var r = new LoanRequestViewModel
+
+            result.ForEach(r =>
             {
-                Id = 1,
-                AmountRequest = 10.12M,
-                CreditSeekerId = 101,
-                CreditSeekerName = "CreditSeeker", // TODO Get the name of seeker from db by ID
-                CurrencyId = 22,
-                Currency = "EUR", // TODO Get the name of seeker from db by CurrencyId
-                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus, neque at accumsan consequat, urna diam imperdiet nulla, sed cursus leo elit in magna. Morbi dui tellus, tincidunt ac viverra a, blandit id sapien. Sed laoreet semper lacus non sagittis. Vestibulum elementum gravida tellus at porttitor. Vestibulum ut consequat mi. In sodales eros sed maximus dictum. Mauris efficitur velit ut finibus suscipit. Proin rutrum dui a nisl aliquam, vitae iaculis dolor efficitur. Suspendisse sapien tortor, eleifend sed lacus at, ornare gravida tortor. Vestibulum sollicitudin, enim a sodales accumsan, lectus nibh suscipit tellus, vel mattis orci lorem eu odio.",
-                InterestRate = 0.9M,
-                RepaymentEndDate = DateTime.Now,
-                RepaymentStartDate = DateTime.Now
-            };
-            return new List<LoanRequestViewModel> { r, r, r, r, r, r, r, r,r};
+                var bid = _context.Bids.FirstOrDefault(b => b.LoanRequestId == r.Id && b.InvestorId == currentUserId);
+                if (bid != null)
+                {
+                    r.CurrentInvestorAmount = bid.Amount;
+                }
+            });
+
+            return result;            
+        }
+
+        private void FillInIfEmpty()
+        {
+            if (!_context.LoanRequests.Any())
+            {
+                var items = new List<LoanRequest> {
+                            new LoanRequest
+                            {
+                                //Id = 1,
+                                ActiveTo = DateTime.MaxValue,
+                                AmountRequest = 1000,
+                                InterestRate = 0.99M,
+                                IsWithdrawn = false,
+                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                RepaymentEndDate = DateTime.Now.AddDays(3000),
+                                RepaymentStartDate = DateTime.Now.AddDays(10)
+                            },
+                            new LoanRequest
+                            {
+                                //Id = 2,
+                                ActiveTo = DateTime.Now,
+                                AmountRequest = 1.99M,
+                                InterestRate = 30.00M,
+                                IsWithdrawn = false,
+                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                RepaymentEndDate = DateTime.Now.AddDays(20),
+                                RepaymentStartDate = DateTime.Now.AddDays(2)
+                            },
+                            new LoanRequest
+                            {
+                                //Id = 3,
+                                ActiveTo = DateTime.Now.AddDays(2),
+                                AmountRequest = 1000000.99M,
+                                InterestRate = 0.01M,
+                                IsWithdrawn = false,
+                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                RepaymentEndDate = DateTime.Now.AddDays(20),
+                                RepaymentStartDate = DateTime.Now.AddDays(2)
+                            },
+                            new LoanRequest
+                            {
+                                //Id = 4,
+                                ActiveTo = DateTime.Now.AddDays(-1),
+                                AmountRequest = 1.99M,
+                                InterestRate = 30.00M,
+                                IsWithdrawn = false,
+                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                RepaymentEndDate = DateTime.Now.AddDays(20),
+                                RepaymentStartDate = DateTime.Now.AddDays(2)
+                            },
+                            new LoanRequest
+                            {
+                                //Id = 5,
+                                ActiveTo = DateTime.Now.AddDays(-1),
+                                AmountRequest = 1.99M,
+                                InterestRate = 30.00M,
+                                IsWithdrawn = false,
+                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                RepaymentEndDate = DateTime.Now.AddDays(20),
+                                RepaymentStartDate = DateTime.Now.AddDays(2)
+                            }
+                        };
+
+
+                _context.LoanRequests.AddRange(items);
+                _context.SaveChanges();
+
+            }
+
+
         }
 
         // GET: api/LoanRequests/5
@@ -76,77 +149,7 @@ namespace CrowdlendingPOC.Controllers
             return Ok(loanRequest);
         }
 
-        // PUT: api/LoanRequests/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutLoanRequest([FromRoute] int id, [FromBody] LoanRequest loanRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != loanRequest.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(loanRequest).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LoanRequestExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/LoanRequests
-        [HttpPost]
-        public async Task<IActionResult> PostLoanRequest([FromBody] LoanRequest loanRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.LoanRequests.Add(loanRequest);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetLoanRequest", new { id = loanRequest.Id }, loanRequest);
-        }
-
-        // DELETE: api/LoanRequests/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLoanRequest([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var loanRequest = await _context.LoanRequests.FindAsync(id);
-            if (loanRequest == null)
-            {
-                return NotFound();
-            }
-
-            _context.LoanRequests.Remove(loanRequest);
-            await _context.SaveChangesAsync();
-
-            return Ok(loanRequest);
-        }
-
+        
         private bool LoanRequestExists(int id)
         {
             return _context.LoanRequests.Any(e => e.Id == id);
