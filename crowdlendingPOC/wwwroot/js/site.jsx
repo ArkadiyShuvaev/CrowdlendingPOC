@@ -11,20 +11,17 @@ const Request = (propValues) => {
         ? 
         <button
             type="button"
-            className="btn btn-sm"
-            aria-label="Left Align"
+            className="btn btn-default"
             onClick={(e) => propValues.investorAmountClickRemoveHandler(props.id, e)}>
-
-            <span className="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+            <span className="glyphicon glyphicon-remove"></span>
         </button>
         :
         <button
             type="button"
-            className="btn btn-sm"
-            aria-label="Left Align"
+            className="btn btn-default"
             onClick={(e) => propValues.investorAmountClickAddHandler(props.id, e)}>
-
-            <span className="glyphicon glyphicon-ok test-success" aria-hidden="true"></span>
+            <span className="glyphicon glyphicon-ok">
+            </span>
         </button>
     );
 
@@ -65,14 +62,14 @@ const Request = (propValues) => {
                             <div className="form-element-value">{props.repaymentEndDate}</div>
                         </label>
                     </div>
-                    <div className="form-group">
-                        <label>
-                            Your Bid
-                            <input
-                                value={props.currentInvestorAmount || ""}
-                                onChange={(e) => propValues.investorAmountHandler(props.id, e)} />
-                            {amountBtn}
-                        </label>
+                    <div class="input-group">
+                        <input type="text"
+                            className="form-control"
+                            value={props.currentInvestorAmount || ""}
+                            onChange={(e) => propValues.investorAmountHandler(props.id, e)} />
+                            <span class="input-group-btn">
+                                {amountBtn}
+                            </span>
                     </div>
                 </div>
             </div>
