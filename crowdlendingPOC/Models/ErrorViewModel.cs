@@ -1,5 +1,3 @@
-using System;
-
 namespace crowdlendingPOC.Models
 {
     public class ErrorViewModel
