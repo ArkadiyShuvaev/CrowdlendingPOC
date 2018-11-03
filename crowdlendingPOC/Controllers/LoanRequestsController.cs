@@ -45,7 +45,7 @@ namespace CrowdlendingPOC.Controllers
                     InterestRate = i.InterestRate,
                     RepaymentEndDate = i.RepaymentEndDate,
                     RepaymentStartDate = i.RepaymentStartDate
-                });
+                }).ToList();
 
             result.ForEach(r =>
             {
