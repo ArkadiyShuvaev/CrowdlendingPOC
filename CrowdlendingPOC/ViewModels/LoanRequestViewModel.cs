@@ -13,8 +13,8 @@ namespace CrowdlendingPOC.ViewModels
         public int CurrencyId { get; set; }
         public decimal InterestRate { get; set; }
         public decimal AmountRequest { get; set; }
-        public DateTime RepaymentStartDate { get; set; }
-        public DateTime RepaymentEndDate { get; set; }
+        public string RepaymentStartDate { get; set; }
+        public string RepaymentEndDate { get; set; }
         public string Purpose { get; set; }
         public decimal CurrentInvestorAmount { get; set; }
     }

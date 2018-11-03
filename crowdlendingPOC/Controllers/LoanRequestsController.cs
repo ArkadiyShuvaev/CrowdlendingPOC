@@ -38,13 +38,13 @@ namespace CrowdlendingPOC.Controllers
                     Id = i.Id,
                     AmountRequest = i.AmountRequest,
                     CreditSeekerId = i.CreditSeekerId,
-                    CreditSeekerName = "CreditSeeker", // TODO Get the name of seeker from db by ID
+                    CreditSeekerName = "CreditSeeker " + i.Id, // TODO Get the name of seeker from db by ID
                     CurrencyId = i.CurrencyId,
                     Currency = "EUR", // TODO Get the name of seeker from db by CurrencyId
                     Purpose = i.Purpose,
                     InterestRate = i.InterestRate,
-                    RepaymentEndDate = i.RepaymentEndDate,
-                    RepaymentStartDate = i.RepaymentStartDate
+                    RepaymentEndDate = i.RepaymentEndDate.ToString("yyyy-MM-dd"), // TODO use client locale
+                    RepaymentStartDate = i.RepaymentStartDate.ToString("yyyy-MM-dd")
                 }).ToList();
 
             result.ForEach(r =>
