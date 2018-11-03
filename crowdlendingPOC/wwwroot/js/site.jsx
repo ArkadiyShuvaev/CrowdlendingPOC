@@ -60,7 +60,7 @@ const Request = (propValues) => {
                             <div className="form-element-value">{props.repaymentEndDate}</div>
                         </label>
                     </div>
-                    <div class="input-group"> // TODO value validation error message
+                    <div className="input-group">
                         <input type="text"
                             placeholder="100 - 10000"
                             className="form-control"
