@@ -89,7 +89,8 @@ const Requests = (props) => {
                 data={item}
                 key={idx}
                 investorAmountHandler={props.investorAmountHandler}
-                investorAmountClickAddHandler={props.investorAmountClickAddHandler}/>
+                investorAmountClickAddHandler={props.investorAmountClickAddHandler}
+                investorAmountClickRemoveHandler={props.investorAmountClickRemoveHandler}/>
             )
     });
 
@@ -107,10 +108,33 @@ class App extends React.Component {
         this.errorHandler = this.errorHandler.bind(this);
         this.investorAmountHandler = this.investorAmountHandler.bind(this);
         this.investorAmountClickAddHandler = this.investorAmountClickAddHandler.bind(this);
-
+        this.investorAmountClickRemoveHandler = this.investorAmountClickRemoveHandler.bind(this);
 
         this.state = initialState;
+    }
 
+    investorAmountClickRemoveHandler(id, e) {
+        e.preventDefault();
+        const currentElem = this.getRequestById(id);
+        const that = this;
+        $.ajax({
+            method: "DELETE",
+            cache: false,
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            url: "api/bids/DeleteBidByLoanRequestId" + "/" + currentElem.id,
+            success: (data) => {
+                debugger;
+                const updatedElem = this.getRequestById(currentElem.id);
+                updatedElem.doesCurrentInvestorAmountExist = false;
+                updatedElem.currentInvestorAmount = "";
+                const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
+                that.setState({ requests: updatedRequests });
+            },
+            error: (xhr, ajaxOptions, thrownError) => {
+                this.errorHandler(xhr, ajaxOptions, thrownError);
+            }
+        });
     }
 
     investorAmountClickAddHandler(id, event) {
@@ -194,7 +218,8 @@ class App extends React.Component {
             <div><Requests
                 requests={this.state.requests}
                 investorAmountHandler={this.investorAmountHandler}
-                investorAmountClickAddHandler={this.investorAmountClickAddHandler}/></div>
+                investorAmountClickAddHandler={this.investorAmountClickAddHandler}
+                investorAmountClickRemoveHandler={this.investorAmountClickRemoveHandler}/></div>
         )
     }
 

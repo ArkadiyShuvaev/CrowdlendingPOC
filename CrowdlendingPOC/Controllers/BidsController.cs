@@ -79,16 +79,15 @@ namespace CrowdlendingPOC.Controllers
             return CreatedAtAction("GetBid", new { id = newBid.Id });
         }
 
-        // DELETE: api/Bids/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBid([FromRoute] int id)
+        [HttpDelete("DeleteBidByLoanRequestId/{loanRequestId}")]
+        public async Task<IActionResult> DeleteBidByLoanRequestId([FromRoute] int loanRequestId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var bid = await _context.Bids.FindAsync(id);
+            var currentRequestorId = 100; // TODO retrieve currentRequestorId from the ControllerContext
+            var bid = _context.Bids.FirstOrDefault(b => b.LoanRequestId == loanRequestId && b.InvestorId == currentRequestorId);
             if (bid == null)
             {
                 return NotFound();
