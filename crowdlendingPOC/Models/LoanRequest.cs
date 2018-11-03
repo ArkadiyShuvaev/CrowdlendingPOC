@@ -11,7 +11,7 @@ namespace CrowdlendingPOC.Models
         [Key]
         public int Id { get; set; }
         public int CreditSeekerId { get; set; }
-        // TODO define a precision dec(??,??) 
+        // TODO define a precision dec(??,??) before go on PROD
         public decimal InterestRate { get; set; }
         // TODO define a precision dec(19,4) 
         public decimal AmountRequest { get; set; }
@@ -19,6 +19,7 @@ namespace CrowdlendingPOC.Models
         public DateTime RepaymentEndDate { get; set; }
         public DateTime ActiveTo { get; set; }
         public bool IsWithdrawn { get; set; }
+        public int CurrencyId { get; set; }
 
         [StringLength(250)]
         public string Purpose { get; set; }
