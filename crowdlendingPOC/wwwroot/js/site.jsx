@@ -32,31 +32,31 @@ const Request = (propValues) => {
                 <div className="panel-body">
                     <div className="form-group">
                         <label>
-                            Credit Seeker
+                            Credit Seeker:
                             <div className="form-element-value">{props.creditSeekerName}</div>
                         </label>
                     </div>
                     <div className="form-group">
                         <label>
-                            Interest Rate
+                            Interest Rate:
                             <div className="form-element-value">{props.interestRate}</div>
                         </label>
                     </div>
                     <div className="form-group">
                         <label>
-                            Purpose
+                            Purpose:
                             <div className="form-element-value">{purpose}</div>
                         </label>
                     </div>
                     <div className="form-group">
                         <label>
-                            Repayment Start Date
+                            Repayment Start Date:
                             <div className="form-element-value">{props.repaymentStartDate}</div>
                         </label>
                     </div>
                     <div className="form-group">
                         <label>
-                            Repayment End Date
+                            Repayment End Date:
                             <div className="form-element-value">{props.repaymentEndDate}</div>
                         </label>
                     </div>
