@@ -4,9 +4,7 @@ const Request = (propValues) => {
     const props = propValues.data;
     const purposeVal = props.purpose || "";
     var purpose = purposeVal.toString().substr(0, 100) + "...";
-
-    //var doesCurrentInvestorAmountExist = true;
-    
+   
     const amountBtn = (props.doesCurrentInvestorAmountExist
         ? 
         <button
@@ -62,8 +60,9 @@ const Request = (propValues) => {
                             <div className="form-element-value">{props.repaymentEndDate}</div>
                         </label>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group"> // TODO value validation error message
                         <input type="text"
+                            placeholder="100 - 10000"
                             className="form-control"
                             value={props.currentInvestorAmount || ""}
                             onChange={(e) => propValues.investorAmountHandler(props.id, e)} />
