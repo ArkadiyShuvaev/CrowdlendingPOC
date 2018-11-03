@@ -35,3 +35,13 @@ body {
         display: none;
     }
 }
+
+.request-element {
+    width: 250px;
+    float: left;
+    padding: 20px;
+}
+
+    .request-element .form-element-value {
+        font-weight: normal;
+    }

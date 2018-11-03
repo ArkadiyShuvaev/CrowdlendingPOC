@@ -14,31 +14,31 @@ const Request = (propValues) => {
                     <div className="form-group">
                         <label>
                             Credit Seeker
-                            <div>{props.creditSeekerName}</div>
+                            <div className="form-element-value">{props.creditSeekerName}</div>
                         </label>
                     </div>
                     <div className="form-group">
                         <label>
                             Interest Rate
-                            <div>{props.interestRate}</div>
+                            <div className="form-element-value">{props.interestRate}</div>
                         </label>
                     </div>
                     <div className="form-group">
                         <label>
                             Purpose
-                            <div>{purpose}</div>
+                            <div className="form-element-value">{purpose}</div>
                         </label>
                     </div>
                     <div className="form-group">
                         <label>
                             Repayment Start Date
-                            <div>{props.repaymentStartDate}</div>
+                            <div className="form-element-value">{props.repaymentStartDate}</div>
                         </label>
                     </div>
                     <div className="form-group">
                         <label>
                             Repayment End Date
-                            <div>{props.repaymentEndDate}</div>
+                            <div className="form-element-value">{props.repaymentEndDate}</div>
                         </label>
                     </div>
                 </div>
@@ -57,8 +57,8 @@ const Requests = (props) => {
                 key={idx} />
             )
     });
-        
-    return (<div>{ requests }</div>);
+
+    return (<div className="row">{requests}</div>);
 
 };
 
