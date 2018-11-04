@@ -17,6 +17,7 @@ const Request = (propValues) => {
         <button
             type="button"
             className="btn btn-default"
+            disabled={!props.currentInvestorAmount}
             onClick={(e) => propValues.investorAmountClickAddHandler(props.id, e)}>
             <span className="glyphicon glyphicon-ok">
             </span>
