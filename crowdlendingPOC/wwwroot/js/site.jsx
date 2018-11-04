@@ -45,7 +45,8 @@ const Request = (propValues) => {
                     <div className="form-group">
                         <label>
                             Purpose:
-                            <div className="form-element-value">{purpose}</div>
+                            <div className="form-element-value"
+                                title={purposeVal}>{purpose}</div>
                         </label>
                     </div>
                     <div className="form-group">

@@ -71,7 +71,7 @@ namespace CrowdlendingPOC.Controllers
                                 AmountRequest = 1000,
                                 InterestRate = 0.99M,
                                 IsWithdrawn = false,
-                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                Purpose = "Lorem ipsum dolor sit amet, diam nostrud minimum sed no, omnesque interesset mei at, ut usu choro affert persecuti. Cum quem viderer at, id vel idque debet. In sea inani consetetur definiebas, esse luptatum vel ei. Nibh inermis vim ea.",
                                 RepaymentEndDate = DateTime.Now.AddDays(3000),
                                 RepaymentStartDate = DateTime.Now.AddDays(10)
                             },
@@ -80,9 +80,9 @@ namespace CrowdlendingPOC.Controllers
                                 //Id = 2,
                                 ActiveTo = DateTime.Now,
                                 AmountRequest = 1.99M,
-                                InterestRate = 30.00M,
+                                InterestRate = 21.00M,
                                 IsWithdrawn = false,
-                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                Purpose = "Lorem ipsum dolor sit amet, diam nostrud minimum sed no, omnesque interesset mei at, ut usu choro affert persecuti. Cum quem viderer at, id vel idque debet. In sea inani consetetur definiebas, esse luptatum vel ei. Nibh inermis vim ea.",
                                 RepaymentEndDate = DateTime.Now.AddDays(20),
                                 RepaymentStartDate = DateTime.Now.AddDays(2)
                             },
@@ -93,7 +93,7 @@ namespace CrowdlendingPOC.Controllers
                                 AmountRequest = 1000000.99M,
                                 InterestRate = 0.01M,
                                 IsWithdrawn = false,
-                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                Purpose = "Lorem ipsum dolor sit amet, diam nostrud minimum sed no, omnesque interesset mei at, ut usu choro affert persecuti. Cum quem viderer at, id vel idque debet. In sea inani consetetur definiebas, esse luptatum vel ei. Nibh inermis vim ea.",
                                 RepaymentEndDate = DateTime.Now.AddDays(20),
                                 RepaymentStartDate = DateTime.Now.AddDays(2)
                             },
@@ -104,7 +104,7 @@ namespace CrowdlendingPOC.Controllers
                                 AmountRequest = 1.99M,
                                 InterestRate = 30.00M,
                                 IsWithdrawn = false,
-                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                Purpose = "Lorem ipsum dolor sit amet, diam nostrud minimum sed no, omnesque interesset mei at, ut usu choro affert persecuti. Cum quem viderer at, id vel idque debet. In sea inani consetetur definiebas, esse luptatum vel ei. Nibh inermis vim ea.",
                                 RepaymentEndDate = DateTime.Now.AddDays(20),
                                 RepaymentStartDate = DateTime.Now.AddDays(2)
                             },
@@ -113,9 +113,9 @@ namespace CrowdlendingPOC.Controllers
                                 //Id = 5,
                                 ActiveTo = DateTime.Now.AddDays(-1),
                                 AmountRequest = 1.99M,
-                                InterestRate = 30.00M,
+                                InterestRate = 12.50M,
                                 IsWithdrawn = false,
-                                Purpose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                Purpose = "Lorem ipsum dolor sit amet, diam nostrud minimum sed no, omnesque interesset mei at, ut usu choro affert persecuti. Cum quem viderer at, id vel idque debet. In sea inani consetetur definiebas, esse luptatum vel ei. Nibh inermis vim ea.",
                                 RepaymentEndDate = DateTime.Now.AddDays(20),
                                 RepaymentStartDate = DateTime.Now.AddDays(2)
                             }
