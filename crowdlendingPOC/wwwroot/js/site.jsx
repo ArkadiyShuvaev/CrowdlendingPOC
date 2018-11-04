@@ -183,7 +183,8 @@ class App extends React.Component {
     }
 
     errorHandler(x, status, error) {
-        alert(status + ": " + error);
+        bootbox.alert("An unexpected error occurred: " + error +
+            ". Please validate your input and try again");
     }
 
     getRequestById(id) {
