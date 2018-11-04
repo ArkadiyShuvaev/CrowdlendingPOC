@@ -66,7 +66,7 @@ const Request = (propValues) => {
                             className="form-control"
                             value={props.currentInvestorAmount || ""}
                             onChange={(e) => propValues.investorAmountHandler(props.id, e)} />
-                            <span class="input-group-btn">
+                            <span className="input-group-btn">
                                 {amountBtn}
                             </span>
                     </div>
@@ -113,24 +113,44 @@ class App extends React.Component {
         e.preventDefault();
         const currentElem = this.getRequestById(id);
         const that = this;
-        $.ajax({
-            method: "DELETE",
-            cache: false,
-            async: true,
-            contentType: 'application/json; charset=utf-8',
-            url: "api/bids/DeleteBidByLoanRequestId" + "/" + currentElem.id,
-            success: (data) => {
-                debugger;
-                const updatedElem = this.getRequestById(currentElem.id);
-                updatedElem.doesCurrentInvestorAmountExist = false;
-                updatedElem.currentInvestorAmount = "";
-                const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
-                that.setState({ requests: updatedRequests });
-            },
-            error: (xhr, ajaxOptions, thrownError) => {
-                this.errorHandler(xhr, ajaxOptions, thrownError);
+        bootbox.dialog({
+            title: 'Confirm',
+            message: "Are you sure you want to remove your bid?",
+            buttons: {
+                no: {
+                    label: "No",
+                    className: "btn-default",
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                },
+                yes: {
+                    label: "Remove",
+                    className: "btn-danger",
+                    callback: function () {
+                        $.ajax({
+                            method: "DELETE",
+                            cache: false,
+                            async: true,
+                            url: "api/bids/DeleteBidByLoanRequestId/" + currentElem.id,
+                            success: (data) => {
+                                debugger;
+                                const updatedElem = that.getRequestById(currentElem.id);
+                                updatedElem.doesCurrentInvestorAmountExist = false;
+                                updatedElem.currentInvestorAmount = "";
+                                const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
+                                that.setState({ requests: updatedRequests });
+                            },
+                            error: (xhr, ajaxOptions, thrownError) => {
+                                that.errorHandler(xhr, ajaxOptions, thrownError);
+                            }
+                        });
+                    }
+                }
             }
         });
+
+        
     }
 
     investorAmountClickAddHandler(id, event) {
@@ -157,7 +177,7 @@ class App extends React.Component {
                 that.setState({ requests: updatedRequests });
             },
             error: (xhr, ajaxOptions, thrownError) => {
-                this.errorHandler(xhr, ajaxOptions, thrownError);
+                that.errorHandler(xhr, ajaxOptions, thrownError);
             }
         });
     }
