@@ -47,6 +47,8 @@ namespace CrowdlendingPOC.Controllers
                     RepaymentStartDate = i.RepaymentStartDate.ToString("yyyy-MM-dd")
                 }).ToList();
 
+            var maxInterestRate = result.Max(i => i.InterestRate);
+
             result.ForEach(r =>
             {
                 var bid = _context.Bids.FirstOrDefault(b => b.LoanRequestId == r.Id && b.InvestorId == currentUserId);
@@ -54,6 +56,7 @@ namespace CrowdlendingPOC.Controllers
                 {
                     r.CurrentInvestorAmount = bid.Amount;
                 }
+                r.IsInterestRateAttractive = r.InterestRate > (maxInterestRate * 0.9M);
             });
 
             return result;            
@@ -80,7 +83,7 @@ namespace CrowdlendingPOC.Controllers
                                 //Id = 2,
                                 ActiveTo = DateTime.Now,
                                 AmountRequest = 1.99M,
-                                InterestRate = 21.00M,
+                                InterestRate = 28.00M,
                                 IsWithdrawn = false,
                                 Purpose = "Lorem ipsum dolor sit amet, diam nostrud minimum sed no, omnesque interesset mei at, ut usu choro affert persecuti. Cum quem viderer at, id vel idque debet. In sea inani consetetur definiebas, esse luptatum vel ei. Nibh inermis vim ea.",
                                 RepaymentEndDate = DateTime.Now.AddDays(20),

@@ -24,6 +24,17 @@ const Request = (propValues) => {
         </button>
     );
 
+    const interestRateControl = (props.isInterestRateAttractive
+        ? <label>
+            Interest Rate:
+            <div className="form-element-value text-primary"><strong>{props.interestRate}</strong></div>
+          </label>
+        : <label>
+            Interest Rate:
+            <div className="form-element-value">{props.interestRate}</div>
+           </label>
+    );
+
     return (
         <div className="request-element">
             <div className="panel panel-default">
@@ -38,10 +49,7 @@ const Request = (propValues) => {
                         </label>
                     </div>
                     <div className="form-group">
-                        <label>
-                            Interest Rate:
-                            <div className="form-element-value">{props.interestRate}</div>
-                        </label>
+                        {interestRateControl}
                     </div>
                     <div className="form-group">
                         <label>
