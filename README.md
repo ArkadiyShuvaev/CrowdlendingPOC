@@ -3,4 +3,7 @@ A small crowdlending platform as a proof of concept powered by React Js and .Net
 
 ## To start project
 * Clone the project
-* Compile the project. A database will be filled in with test data automatically.
+* Go to the CrowdlendingPOC\DeploymentScripts folder and execute the dbSchemaWithData.sql script
+* Start the project
+
+Thank you for your interest.
