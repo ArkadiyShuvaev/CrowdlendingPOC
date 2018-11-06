@@ -22,13 +22,13 @@ namespace CrowdlendingPOC.Controllers
             _context = context;
         }
 
-        // GET: api/LoanRequests
+        
         [HttpGet]
         public IEnumerable<LoanRequestViewModel> GetLoanRequest()
         {
             //TODO Add Exception Handling
 
-            FillInIfEmpty();
+            //FillInIfEmpty();
             var currentUserId = 100; // TODO retrieve currentUserId from the ControllerContext
 
             var result = _context.LoanRequests
