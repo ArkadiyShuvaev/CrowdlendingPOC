@@ -22,14 +22,12 @@ namespace CrowdlendingPOC.Controllers
             _context = context;
         }
 
-        // GET: api/Bids
         [HttpGet]
         public IEnumerable<Bid> GetBids()
         {
             return _context.Bids;
         }
 
-        // GET: api/Bids/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBid([FromRoute] int id)
         {
@@ -49,7 +47,6 @@ namespace CrowdlendingPOC.Controllers
         }
 
        
-        // POST: api/Bids
         [HttpPost("PostBid")]
         public async Task<IActionResult> PostBid([FromBody] LoanRequestCreationViewModel vm)
         {
@@ -99,9 +96,5 @@ namespace CrowdlendingPOC.Controllers
             return Ok(bid);
         }
 
-        private bool BidExists(int id)
-        {
-            return _context.Bids.Any(e => e.Id == id);
-        }
     }
 }
