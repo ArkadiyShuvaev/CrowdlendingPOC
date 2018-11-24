@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>CrowdlendingPOC</AssemblyName>
     <RootNamespace>CrowdlendingPOC</RootNamespace>
+    <UserSecretsId>e90bb490-ac09-40da-ac2d-1e4202f99065</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

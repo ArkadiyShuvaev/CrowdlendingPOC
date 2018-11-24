@@ -37,13 +37,13 @@ namespace crowdlendingPOC
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            //{
-            //    using (var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
-            //    {
-            //        context.Database.Migrate();
-            //    }
-            //}
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
 
             if (env.IsDevelopment())
             {

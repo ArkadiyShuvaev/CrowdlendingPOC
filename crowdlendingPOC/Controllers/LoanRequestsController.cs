@@ -28,7 +28,7 @@ namespace CrowdlendingPOC.Controllers
         {
             //TODO Add Exception Handling
 
-            //FillInIfEmpty();
+            FillInIfEmpty();
             var currentUserId = 100; // TODO retrieve currentUserId from the ControllerContext
 
             var result = _context.LoanRequests
