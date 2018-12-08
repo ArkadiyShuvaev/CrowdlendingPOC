@@ -1,0 +1,29 @@
+{
+  "name": "crowdlendingpoc",
+  "version": "1.0.0",
+  "description": "crowdlending proof of concept",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootbox": "4.4.0",
+    "bootstrap": "3.3.7",
+    "jquery": "3.3.1",
+    "react": "16.6.3",
+    "react-dom": "16.6.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "acorn": "^6.0.4",
+    "babelify": "^10.0.0",
+    "browserify": "^16.2.3",
+    "rimraf": "2.6.2",
+    "gulp": "^3.9.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
