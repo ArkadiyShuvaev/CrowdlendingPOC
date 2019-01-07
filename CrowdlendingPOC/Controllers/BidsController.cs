@@ -41,7 +41,8 @@ namespace CrowdlendingPOC.Controllers
             return Ok(bid);
         }
 
-        [HttpPost("PostBid")]
+        // POST: api/bids
+        [HttpPost]
         public async Task<IActionResult> PostBid([FromBody] LoanRequestCreationViewModel vm)
         {
             if (!ModelState.IsValid)

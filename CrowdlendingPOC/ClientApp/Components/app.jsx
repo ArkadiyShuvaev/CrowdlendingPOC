@@ -38,17 +38,15 @@ export default class App extends React.Component {
                             method: "DELETE",
                             cache: false,
                             async: true,
-                            url: "api/bids/DeleteBidByLoanRequestId/" + currentElem.id,
-                            success: (data) => {
-                                const updatedElem = that.getRequestById(currentElem.id);
-                                updatedElem.doesProposalBelongToCurrentUser = false;
-                                updatedElem.currentInvestorProposal = "";
-                                const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
-                                that.setState({ requests: updatedRequests });
-                            },
-                            error: (xhr, ajaxOptions, thrownError) => {
-                                that.errorHandler(xhr, ajaxOptions, thrownError);
-                            }
+                            url: "/api/bids/DeleteBidByLoanRequestId/" + currentElem.id
+                        }).done((data) => {
+                            const updatedElem = that.getRequestById(currentElem.id);
+                            updatedElem.doesProposalBelongToCurrentUser = false;
+                            updatedElem.currentInvestorProposal = "";
+                            const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
+                            that.setState({ requests: updatedRequests });
+                        }).fail((xhr, ajaxOptions, thrownError) => {
+                            that.errorHandler(xhr, ajaxOptions, thrownError);
                         });
                     }
                 }
@@ -87,16 +85,14 @@ export default class App extends React.Component {
                             async: true,
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
-                            url: "api/bids/PostBid",
-                            success: (data) => {
-                                const updatedElem = that.getRequestById(currentElem.id);
-                                updatedElem.doesProposalBelongToCurrentUser = true;
-                                const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
-                                that.setState({ requests: updatedRequests });
-                            },
-                            error: (xhr, ajaxOptions, thrownError) => {
-                                that.errorHandler(xhr, ajaxOptions, thrownError);
-                            }
+                            url: "/api/bids"
+                        }).done((data) => {
+                            const updatedElem = that.getRequestById(currentElem.id);
+                            updatedElem.doesProposalBelongToCurrentUser = true;
+                            const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
+                            that.setState({ requests: updatedRequests });
+                        }).fail((xhr, ajaxOptions, thrownError) => {
+                            that.errorHandler(xhr, ajaxOptions, thrownError);
                         });
                     }
                 }
@@ -133,24 +129,22 @@ export default class App extends React.Component {
             method: "GET",
             cache: false,
             async: true,
-            url: "api/LoanRequests",
-            success: (data) => {
-                if (data && data.length > 0) {
+            url: "/api/loanRequests"
+        }).done(data => {
+            if (data && data.length > 0) {
+                const requests = data.map((i => {
+                    if (i.currentInvestorProposal) {
+                        i.doesProposalBelongToCurrentUser = true;
+                    }
+                    return i;
+                }));
 
-                    const requests = data.map((i => {
-                        if (i.currentInvestorProposal) {
-                            i.doesProposalBelongToCurrentUser = true;
-                        }
-                    }));
-
-                    that.setState({ requests: data })
-                }
-
-            },
-            error: (xhr, ajaxOptions, thrownError) => {
-                alert(xhr.status);
-                alert(thrownError);
+                that.setState({ requests: requests })
             }
+
+        }).fail((xhr, ajaxOptions, thrownError) => {
+            alert(xhr.status);
+            alert(thrownError);
         });
     }
 
