@@ -3,12 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CrowdlendingPOC.ViewModels
 {
-
-    public class LoanRequestCreationViewModel
+    public class BidCreationViewModel
     {
         [Range(1, int.MaxValue)]
         public int LoanRequestId { get; set; }
         [Range(typeof(decimal), "100", "10000")]
-        public decimal CurrentInvestorProposal { get; set; }
+        public decimal InvestorBidValue { get; set; }
     }
 }

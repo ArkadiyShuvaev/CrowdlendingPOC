@@ -43,7 +43,7 @@ namespace CrowdlendingPOC.Controllers
 
         // POST: api/bids
         [HttpPost]
-        public async Task<IActionResult> PostBid([FromBody] LoanRequestCreationViewModel vm)
+        public async Task<IActionResult> PostBid([FromBody] BidCreationViewModel vm)
         {
             if (!ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace CrowdlendingPOC.Controllers
 
             var newBid = new Bid
             {
-                Amount = vm.CurrentInvestorProposal,
+                Amount = vm.InvestorBidValue,
                 LoanRequestId = vm.LoanRequestId,
                 InvestorId = currentRequestorId
             };

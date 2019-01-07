@@ -60,7 +60,7 @@ export default class App extends React.Component {
         const currentElem = this.getRequestById(id);
         const data = JSON.stringify({
             loanRequestId: currentElem.id,
-            currentInvestorProposal: currentElem.currentInvestorProposal
+            investorBidValue: currentElem.currentInvestorProposal
         });
         const that = this;
 
