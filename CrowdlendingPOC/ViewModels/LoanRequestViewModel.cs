@@ -16,7 +16,7 @@ namespace CrowdlendingPOC.ViewModels
         public string RepaymentStartDate { get; set; }
         public string RepaymentEndDate { get; set; }
         public string Purpose { get; set; }
-        public decimal CurrentInvestorAmount { get; set; }
+        public decimal CurrentInvestorProposal { get; set; }
         public bool IsInterestRateAttractive { get; set; }
     }
 }

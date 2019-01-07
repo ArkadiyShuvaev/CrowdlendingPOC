@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using CrowdlendingPOC.Models;
 using CrowdlendingPOC.Data;
 using CrowdlendingPOC.ViewModels;
@@ -22,12 +21,9 @@ namespace CrowdlendingPOC.Controllers
             _context = context;
         }
 
-        
         [HttpGet]
         public IEnumerable<LoanRequestViewModel> GetLoanRequest()
         {
-            //TODO Add Exception Handling
-
             FillInIfEmpty();
             var currentUserId = 100; // TODO retrieve currentUserId from the ControllerContext
 
@@ -43,7 +39,7 @@ namespace CrowdlendingPOC.Controllers
                     Currency = "EUR", // TODO Get the name of seeker from db by CurrencyId
                     Purpose = i.Purpose,
                     InterestRate = i.InterestRate,
-                    RepaymentEndDate = i.RepaymentEndDate.ToString("yyyy-MM-dd"), // TODO use client locale
+                    RepaymentEndDate = i.RepaymentEndDate.ToString("yyyy-MM-dd"), // TODO use moment.js on a client side
                     RepaymentStartDate = i.RepaymentStartDate.ToString("yyyy-MM-dd")
                 }).ToList();
 
@@ -54,12 +50,34 @@ namespace CrowdlendingPOC.Controllers
                 var bid = _context.Bids.FirstOrDefault(b => b.LoanRequestId == r.Id && b.InvestorId == currentUserId);
                 if (bid != null)
                 {
-                    r.CurrentInvestorAmount = bid.Amount;
+                    r.CurrentInvestorProposal = bid.Amount;
                 }
                 r.IsInterestRateAttractive = r.InterestRate > (maxInterestRate * 0.9M);
             });
 
-            return result;            
+            return result;
+        }
+
+
+        // GET: api/LoanRequests/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetLoanRequest([FromRoute] int id)
+        {
+            if (id <= 0) return BadRequest(nameof(id));
+
+            var loanRequest = await _context.LoanRequests.FindAsync(id).ConfigureAwait(false);
+
+            if (loanRequest == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(loanRequest);
+        }
+
+        private bool LoanRequestExists(int id)
+        {
+            return _context.LoanRequests.Any(e => e.Id == id);
         }
 
         private void FillInIfEmpty()
@@ -131,31 +149,6 @@ namespace CrowdlendingPOC.Controllers
             }
 
 
-        }
-
-        // GET: api/LoanRequests/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetLoanRequest([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var loanRequest = await _context.LoanRequests.FindAsync(id);
-
-            if (loanRequest == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(loanRequest);
-        }
-
-        
-        private bool LoanRequestExists(int id)
-        {
-            return _context.LoanRequests.Any(e => e.Id == id);
         }
     }
 }

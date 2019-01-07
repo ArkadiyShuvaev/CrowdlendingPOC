@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using CrowdlendingPOC.Data;
 using CrowdlendingPOC.Models;
 using CrowdlendingPOC.ViewModels;
@@ -19,6 +16,7 @@ namespace CrowdlendingPOC.Controllers
 
         public BidsController(ApplicationDbContext context)
         {
+            // TODO inject IBidRepository or IBidService instead of ApplicationDbContext to purpose of the unit testing
             _context = context;
         }
 
@@ -31,12 +29,9 @@ namespace CrowdlendingPOC.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBid([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (id <= 0) return BadRequest(nameof(id));
 
-            var bid = await _context.Bids.FindAsync(id);
+            var bid = await _context.Bids.FindAsync(id).ConfigureAwait(false);
 
             if (bid == null)
             {
@@ -46,7 +41,6 @@ namespace CrowdlendingPOC.Controllers
             return Ok(bid);
         }
 
-       
         [HttpPost("PostBid")]
         public async Task<IActionResult> PostBid([FromBody] LoanRequestCreationViewModel vm)
         {
@@ -54,24 +48,24 @@ namespace CrowdlendingPOC.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             var currentRequestorId = 100; // TODO retrieve currentRequestorId from the ControllerContext
 
-            var doesBidExist = _context.Bids.Any(b => b.InvestorId == currentRequestorId && b.LoanRequestId == vm.LoanRequestId);
+            var doesBidExist = _context.Bids.Any(b => b.InvestorId == currentRequestorId
+                                    && b.LoanRequestId == vm.LoanRequestId);
             if(doesBidExist)
             {
-                return BadRequest("Bid already exits");
+                return BadRequest($"Bid for the '{vm.LoanRequestId}' loanId already exists and cannot be created");
             }
 
             var newBid = new Bid
             {
-                Amount = vm.CurrentInvestorAmount,
+                Amount = vm.CurrentInvestorProposal,
                 LoanRequestId = vm.LoanRequestId,
                 InvestorId = currentRequestorId
             };
-            _context.Bids.Add(newBid);
-
-            await _context.SaveChangesAsync(); // Todo Add exception handling 
+            await _context.Bids.AddAsync(newBid).ConfigureAwait(false);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             return CreatedAtAction("GetBid", new { id = newBid.Id });
         }

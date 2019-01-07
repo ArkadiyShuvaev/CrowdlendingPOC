@@ -41,8 +41,8 @@ export default class App extends React.Component {
                             url: "api/bids/DeleteBidByLoanRequestId/" + currentElem.id,
                             success: (data) => {
                                 const updatedElem = that.getRequestById(currentElem.id);
-                                updatedElem.doesCurrentInvestorAmountExist = false;
-                                updatedElem.currentInvestorAmount = "";
+                                updatedElem.doesProposalBelongToCurrentUser = false;
+                                updatedElem.currentInvestorProposal = "";
                                 const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
                                 that.setState({ requests: updatedRequests });
                             },
@@ -62,7 +62,7 @@ export default class App extends React.Component {
         const currentElem = this.getRequestById(id);
         const data = JSON.stringify({
             loanRequestId: currentElem.id,
-            currentInvestorAmount: currentElem.currentInvestorAmount
+            currentInvestorProposal: currentElem.currentInvestorProposal
         });
         const that = this;
 
@@ -90,7 +90,7 @@ export default class App extends React.Component {
                             url: "api/bids/PostBid",
                             success: (data) => {
                                 const updatedElem = that.getRequestById(currentElem.id);
-                                updatedElem.doesCurrentInvestorAmountExist = true;
+                                updatedElem.doesProposalBelongToCurrentUser = true;
                                 const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
                                 that.setState({ requests: updatedRequests });
                             },
@@ -121,7 +121,7 @@ export default class App extends React.Component {
 
         const currentElem = this.getRequestById(id);
 
-        currentElem.currentInvestorAmount = event.target.value;
+        currentElem.currentInvestorProposal = event.target.value;
 
         this.setState({ requests: this.state.requests });
     }
@@ -138,8 +138,8 @@ export default class App extends React.Component {
                 if (data && data.length > 0) {
 
                     const requests = data.map((i => {
-                        if (i.currentInvestorAmount) {
-                            i.doesCurrentInvestorAmountExist = true;
+                        if (i.currentInvestorProposal) {
+                            i.doesProposalBelongToCurrentUser = true;
                         }
                     }));
 

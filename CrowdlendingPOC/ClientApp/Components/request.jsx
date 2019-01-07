@@ -6,7 +6,7 @@ export const Request = (propValues) => {
     const purposeVal = props.purpose || "";
     var purpose = purposeVal.toString().substr(0, 100) + "...";
 
-    const amountBtn = (props.doesCurrentInvestorAmountExist
+    const amountBtn = (props.doesProposalBelongToCurrentUser
         ?
         <button
             type="button"
@@ -18,7 +18,7 @@ export const Request = (propValues) => {
         <button
             type="button"
             className="btn btn-default"
-            disabled={!props.currentInvestorAmount}
+            disabled={!props.currentInvestorProposal}
             onClick={(e) => propValues.investorAmountClickAddHandler(props.id, e)}>
             <span className="glyphicon glyphicon-ok">
             </span>
@@ -75,7 +75,7 @@ export const Request = (propValues) => {
                         <input type="text"
                             placeholder="100 - 10000"
                             className="form-control"
-                            value={props.currentInvestorAmount || ""}
+                            value={props.currentInvestorProposal || ""}
                             onChange={(e) => propValues.investorAmountHandler(props.id, e)} />
                         <span className="input-group-btn">
                             {amountBtn}
