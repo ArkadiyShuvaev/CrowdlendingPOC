@@ -51,6 +51,7 @@ namespace CrowdlendingPOC.Controllers
                 if (bid != null)
                 {
                     r.CurrentInvestorProposal = bid.Amount;
+                    r.BidId = bid.Id;
                 }
                 r.IsInterestRateAttractive = r.InterestRate > (maxInterestRate * 0.9M);
             });

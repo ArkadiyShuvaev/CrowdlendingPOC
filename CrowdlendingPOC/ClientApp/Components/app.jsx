@@ -38,13 +38,16 @@ export default class App extends React.Component {
                             method: "DELETE",
                             cache: false,
                             async: true,
-                            url: "/api/bids/DeleteBidByLoanRequestId/" + currentElem.id
-                        }).done((data) => {
+                            url: `/api/bids/${currentElem.bidId}`
+                        }).done(() => {
                             const updatedElem = that.getRequestById(currentElem.id);
                             updatedElem.doesProposalBelongToCurrentUser = false;
                             updatedElem.currentInvestorProposal = "";
+                            updatedElem.bidId = 0;
+
                             const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
                             that.setState({ requests: updatedRequests });
+
                         }).fail((xhr, ajaxOptions, thrownError) => {
                             that.errorHandler(xhr, ajaxOptions, thrownError);
                         });
@@ -86,9 +89,12 @@ export default class App extends React.Component {
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
                             url: "/api/bids"
-                        }).done((data) => {
+                        }).done((createdBid) => {
+                            console.log(createdBid);
                             const updatedElem = that.getRequestById(currentElem.id);
                             updatedElem.doesProposalBelongToCurrentUser = true;
+                            updatedElem.bidId = createdBid.id;
+
                             const updatedRequests = Object.assign(that.state.requests, { requests: updatedElem });
                             that.setState({ requests: updatedRequests });
                         }).fail((xhr, ajaxOptions, thrownError) => {

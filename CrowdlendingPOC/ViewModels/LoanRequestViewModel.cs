@@ -18,5 +18,6 @@ namespace CrowdlendingPOC.ViewModels
         public string Purpose { get; set; }
         public decimal CurrentInvestorProposal { get; set; }
         public bool IsInterestRateAttractive { get; set; }
+        public int BidId { get; set; }
     }
 }
